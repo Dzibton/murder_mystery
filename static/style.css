@@ -1,11 +1,11 @@
 :root {
-  --bg: #1a1a2e;
-  --surface: #16213e;
-  --accent: #e94560;
-  --green: #4ecca3;
-  --yellow: #f6c90e;
-  --text: #e0e0e0;
-  --muted: #888;
+  --bg: #f2e4c4;
+  --surface: #e0cfa0;
+  --accent: #8b2500;
+  --green: #4a6741;
+  --yellow: #b8860b;
+  --text: #2c1a0e;
+  --muted: #7a6040;
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -44,9 +44,9 @@ label {
 
 select, input[type="text"], input[type="password"], textarea {
   width: 100%;
-  background: var(--bg);
+  background: #fdf6e3;
   color: var(--text);
-  border: 1px solid #333;
+  border: 1px solid #a08060;
   border-radius: 6px;
   padding: 12px;
   font-size: 1rem;
@@ -74,7 +74,8 @@ textarea { min-height: 80px; resize: vertical; }
 
 .btn-secondary {
   background: var(--surface);
-  border: 1px solid #444;
+  color: var(--text);
+  border: 1px solid #a08060;
 }
 
 .btn-full { width: 100%; margin-top: 8px; }
@@ -140,10 +141,10 @@ textarea { min-height: 80px; resize: vertical; }
 .character-list { list-style: none; line-height: 2; }
 
 .tally-table { width: 100%; border-collapse: collapse; }
-.tally-table td { padding: 8px 4px; border-bottom: 1px solid #333; }
+.tally-table td { padding: 8px 4px; border-bottom: 1px solid #c4a87a; }
 .tally-table tr:last-child td { border-bottom: none; }
 .tally-count { text-align: right; font-weight: bold; color: var(--accent); min-width: 40px; }
 
-.btn-danger { background: #8b0000; }
-.reset-card { border: 1px solid #8b0000; margin-top: 32px; }
+.btn-danger { background: #6b1a00; color: #f2e4c4; }
+.reset-card { border: 1px solid #8b2500; margin-top: 32px; }
 .success-msg { color: var(--green); font-size: 0.9rem; margin-bottom: 12px; }
