@@ -48,6 +48,9 @@ def create_app(testing=False):
     from routes.dashboard import dashboard_bp
     app.register_blueprint(dashboard_bp)
 
+    from routes.slideshow import slideshow_bp
+    app.register_blueprint(slideshow_bp)
+
     return app
 
 

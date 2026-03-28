@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+{% block title %}Slideshow — Murder Mystery{% endblock %}
+{% block content %}
+<div id="slideshow">
+{% if slides %}
+  {% for slide in slides %}
+  <div class="slide" id="slide-{{ loop.index }}" style="display: {% if loop.first %}block{% else %}none{% endif %};">
+    <div class="nav-row">
+      <button class="btn btn-secondary" onclick="changeSlide(-1)" {% if loop.first %}disabled{% endif %}>&#9664; Prev</button>
+      <span class="counter">{{ loop.index }} / {{ total }}</span>
+      <button class="btn btn-secondary" onclick="changeSlide(1)" {% if loop.last %}disabled{% endif %}>Next &#9654;</button>
+    </div>
+
+    <h2>{{ slide.character_name }}</h2>
+
+    <div class="slide-grid" style="margin-top: 16px;">
+      <div class="card slide-full">
+        <p class="slide-label">Accuses</p>
+        <p class="slide-value">{{ slide.answers.get('accuse', '&mdash;') }}</p>
+      </div>
+      <div class="card slide-full">
+        <p class="slide-label">Because</p>
+        <p class="slide-value">{{ slide.answers.get('why', '&mdash;') }}</p>
+      </div>
+      <div class="card">
+        <p class="slide-label">Best Dressed</p>
+        <p class="slide-value">{{ slide.answers.get('best_dressed', '&mdash;') }}</p>
+      </div>
+      <div class="card">
+        <p class="slide-label">Best Actor/Actress</p>
+        <p class="slide-value">{{ slide.answers.get('best_actor', '&mdash;') }}</p>
+      </div>
+      <div class="card">
+        <p class="slide-label">Money</p>
+        <p class="slide-value">{{ slide.answers.get('money', '&mdash;') }}</p>
+      </div>
+      <div class="card">
+        <p class="slide-label">How</p>
+        <p class="slide-value">{{ slide.answers.get('how_money', '&mdash;') }}</p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+{% else %}
+  <div class="card" style="text-align:center; margin-top: 40px;">
+    <p>No responses yet.</p>
+  </div>
+{% endif %}
+</div>
+
+<script>
+  let current = 1;
+  const total = {{ total }};
+
+  function changeSlide(dir) {
+    const oldSlide = document.getElementById('slide-' + current);
+    current = Math.max(1, Math.min(total, current + dir));
+    const newSlide = document.getElementById('slide-' + current);
+    if (oldSlide) oldSlide.style.display = 'none';
+    if (newSlide) newSlide.style.display = 'block';
+  }
+</script>
+{% endblock %}
