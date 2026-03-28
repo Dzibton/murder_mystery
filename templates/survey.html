@@ -8,7 +8,7 @@
 <p class="error">{{ error }}</p>
 {% endif %}
 
-<form method="post" action="/survey">
+<form method="post" action="{{ url_for('survey.survey') }}">
   {% for q in config.questions %}
   <div class="card">
     <label for="{{ q.id }}">{{ q.text }}</label>

@@ -20,7 +20,7 @@ def client(app):
 def test_survey_get(client):
     response = client.get("/survey")
     assert response.status_code == 200
-    assert b"What&#39;s your name?" in response.data or b"Your name?" in response.data
+    assert b"Your name?" in response.data
 
 
 def test_survey_post_creates_response(client, app):
@@ -66,7 +66,7 @@ def test_survey_duplicate_flagged(client, app):
 def test_survey_requires_name(client):
     resp = client.post("/survey", data={"accuse": "Miss Scarlet"}, follow_redirects=False)
     assert resp.status_code == 200
-    assert b"required" in resp.data.lower() or resp.status_code == 200
+    assert b"please select your name" in resp.data.lower()
 
 
 def test_thank_you_not_duplicate(client, app):
