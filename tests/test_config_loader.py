@@ -44,3 +44,24 @@ def test_missing_name_question_raises(tmp_path):
     }))
     with pytest.raises(ConfigError, match="name"):
         load_config(str(config_file))
+
+
+def test_malformed_yaml_raises(tmp_path):
+    config_file = tmp_path / "config.yaml"
+    config_file.write_text("key: [unclosed")
+    with pytest.raises(ConfigError, match="malformed"):
+        load_config(str(config_file))
+
+
+def test_empty_config_raises(tmp_path):
+    config_file = tmp_path / "config.yaml"
+    config_file.write_text("")
+    with pytest.raises(ConfigError):
+        load_config(str(config_file))
+
+
+def test_null_questions_raises(tmp_path):
+    config_file = tmp_path / "config.yaml"
+    config_file.write_text(yaml.dump({"characters": ["Alice"], "questions": None}))
+    with pytest.raises(ConfigError):
+        load_config(str(config_file))
