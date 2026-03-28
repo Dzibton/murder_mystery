@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+{% block title %}Thank You — Murder Mystery{% endblock %}
+{% block content %}
+<h1>Murder Mystery</h1>
+{% if submission %}
+  {% if submission.is_duplicate %}
+  <div class="card">
+    <p>Thanks <strong>{{ submission.character_name }}</strong> — looks like you may have already submitted. Your response was recorded but flagged for review.</p>
+  </div>
+  {% else %}
+  <div class="card">
+    <p>Thanks <strong>{{ submission.character_name }}</strong>! Your response has been recorded.</p>
+  </div>
+  {% endif %}
+{% else %}
+<div class="card"><p>Your response has been recorded.</p></div>
+{% endif %}
+{% endblock %}

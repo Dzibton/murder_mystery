@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+{% block title %}Survey — Murder Mystery{% endblock %}
+{% block content %}
+<h1>Murder Mystery Survey</h1>
+<p style="color: var(--muted); margin-bottom: 20px;">Fill in your answers below.</p>
+
+{% if error %}
+<p class="error">{{ error }}</p>
+{% endif %}
+
+<form method="post" action="/survey">
+  {% for q in config.questions %}
+  <div class="card">
+    <label for="{{ q.id }}">{{ q.text }}</label>
+    {% if q.type == "dropdown" %}
+    <select name="{{ q.id }}" id="{{ q.id }}" {% if q.id == "name" %}required{% endif %}>
+      <option value="">— select —</option>
+      {% for char in config.characters %}
+      <option value="{{ char }}">{{ char }}</option>
+      {% endfor %}
+    </select>
+    {% else %}
+    <textarea name="{{ q.id }}" id="{{ q.id }}" rows="3"></textarea>
+    {% endif %}
+  </div>
+  {% endfor %}
+  <button type="submit" class="btn btn-full">Submit</button>
+</form>
+{% endblock %}

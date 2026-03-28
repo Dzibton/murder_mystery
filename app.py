@@ -42,6 +42,9 @@ def create_app(testing=False):
 
     db.init_app(app)
 
+    from routes.survey import survey_bp
+    app.register_blueprint(survey_bp)
+
     return app
 
 
