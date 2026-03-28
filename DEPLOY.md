@@ -29,6 +29,8 @@ git push origin master
 
 Watch the deploy logs in the Railway dashboard. If it fails, check the **Logs** tab.
 
+> **Dependency pinning note:** `requirements.txt` lists direct dependencies with pinned versions. `requirements-lock.txt` is a full transitive lockfile generated via `pip freeze` — it documents the exact versions installed during development but Railway uses `requirements.txt` for its build. If you need fully reproducible Railway builds, replace `requirements.txt` with the contents of `requirements-lock.txt`.
+
 ## After first deploy
 
 1. Visit `https://your-app.up.railway.app/survey` — you should see the survey form

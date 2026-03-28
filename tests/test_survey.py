@@ -17,6 +17,12 @@ def client(app):
     return app.test_client()
 
 
+def test_root_redirects_to_survey(client):
+    resp = client.get("/", follow_redirects=False)
+    assert resp.status_code == 302
+    assert "/survey" in resp.headers["Location"]
+
+
 def test_survey_get(client):
     response = client.get("/survey")
     assert response.status_code == 200
