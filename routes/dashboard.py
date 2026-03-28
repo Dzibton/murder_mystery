@@ -33,7 +33,7 @@ def login():
     error = None
     if request.method == "POST":
         pin = request.form.get("pin", "").strip()
-        correct = os.environ.get("DASHBOARD_PIN", "1234")
+        correct = current_app.config.get("DASHBOARD_PIN") or os.environ.get("DASHBOARD_PIN", "1234")
         if pin == correct:
             session["authenticated"] = True
             return redirect(url_for("dashboard.index"))

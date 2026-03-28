@@ -14,6 +14,7 @@ def create_app(testing=False):
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
         app.config["TESTING"] = True
         app.config["SECRET_KEY"] = "test-secret"
+        app.config["DASHBOARD_PIN"] = "1234"
         app.config["APP_CONFIG"] = {
             "characters": ["Lord Blackwood", "Miss Scarlet"],
             "questions": [

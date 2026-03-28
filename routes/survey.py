@@ -36,5 +36,5 @@ def survey():
 
 @survey_bp.route("/thank-you")
 def thank_you():
-    submission = session.get("last_submission")
+    submission = session.pop("last_submission", None)
     return render_template("thank_you.html", submission=submission)

@@ -15,7 +15,7 @@
       {% for name, dupe_count in submitted %}
       <li>
         {% if dupe_count > 0 %}
-        <span class="warn">&#9888; {{ name }} ({{ dupe_count + 1 }} submissions) duplicate</span>
+        <span class="warn">{{ name }} ({{ dupe_count + 1 }} submission{{ 's' if dupe_count > 0 else '' }}, duplicate)</span>
         {% else %}
         <span class="dot-green">{{ name }}</span>
         {% endif %}

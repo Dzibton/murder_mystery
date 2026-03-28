@@ -42,7 +42,7 @@ label {
   margin-bottom: 6px;
 }
 
-select, input[type="text"], textarea {
+select, input[type="text"], input[type="password"], textarea {
   width: 100%;
   background: var(--bg);
   color: var(--text);
