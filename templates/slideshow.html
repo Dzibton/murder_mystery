@@ -58,6 +58,10 @@
     const newSlide = document.getElementById('slide-' + current);
     if (oldSlide) oldSlide.style.display = 'none';
     if (newSlide) newSlide.style.display = 'block';
+    document.querySelectorAll('[onclick="changeSlide(-1)"]')
+            .forEach(b => b.disabled = current === 1);
+    document.querySelectorAll('[onclick="changeSlide(1)"]')
+            .forEach(b => b.disabled = current === total);
   }
 </script>
 {% endblock %}

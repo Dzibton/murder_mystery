@@ -76,4 +76,7 @@ def test_slideshow_ordered_by_config(client, app):
         db.session.commit()
     resp = client.get("/slideshow")
     content = resp.data.decode()
-    assert content.index("Lord Blackwood") < content.index("Miss Scarlet")
+    # Check that Lord Blackwood's slide heading appears before Miss Scarlet's slide heading
+    lord_heading = content.index('<h2>Lord Blackwood</h2>')
+    scarlet_heading = content.index('<h2>Miss Scarlet</h2>')
+    assert lord_heading < scarlet_heading
