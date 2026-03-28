@@ -145,6 +145,9 @@ textarea { min-height: 80px; resize: vertical; }
 .tally-table tr:last-child td { border-bottom: none; }
 .tally-count { text-align: right; font-weight: bold; color: var(--accent); min-width: 40px; }
 
+.response-table th { text-align: left; padding: 6px 4px; color: var(--muted); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 0.05em; border-bottom: 2px solid #c4a87a; }
+.response-table td { vertical-align: top; }
+
 .btn-danger { background: #6b1a00; color: #f2e4c4; }
 .reset-card { border: 1px solid #8b2500; margin-top: 32px; }
 .success-msg { color: var(--green); font-size: 0.9rem; margin-bottom: 12px; }

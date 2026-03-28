@@ -105,11 +105,16 @@ def results():
                 counts[vote] = counts.get(vote, 0) + 1
         tallies[qid] = sorted(counts.items(), key=lambda x: x[1], reverse=True)
 
+    config = current_app.config["APP_CONFIG"]
+    characters = config["characters"]
+    ordered_responses = [latest[c] for c in characters if c in latest]
+
     return render_template(
         "dashboard/results.html",
         tally_questions=tally_questions,
         tallies=tallies,
         total_votes=len(latest),
+        responses=ordered_responses,
         reset_error=request.args.get("reset_error"),
         reset_success=request.args.get("reset_success"),
     )

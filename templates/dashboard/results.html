@@ -22,6 +22,36 @@
 </div>
 {% endfor %}
 
+<div class="card" style="margin-top: 32px; overflow-x: auto;">
+  <p class="col-heading" style="margin-bottom: 12px;">Individual Responses</p>
+  {% if responses %}
+  <table class="tally-table response-table">
+    <thead>
+      <tr>
+        <th>Name</th>
+        <th>Accused</th>
+        <th>Best Dressed</th>
+        <th>Best Actor</th>
+        <th>Money</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in responses %}
+      <tr>
+        <td>{{ r.character_name }}</td>
+        <td>{{ r.answers.get('accuse', '—') }}</td>
+        <td>{{ r.answers.get('best_dressed', '—') }}</td>
+        <td>{{ r.answers.get('best_actor', '—') }}</td>
+        <td>{{ r.answers.get('money', '—') }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p style="color: var(--muted); font-size: 0.9rem;">No responses yet.</p>
+  {% endif %}
+</div>
+
 <div class="card reset-card">
   <p class="col-heading" style="margin-bottom: 12px;">Reset All Responses</p>
   {% if reset_error %}
