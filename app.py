@@ -1,5 +1,5 @@
 import os
-from flask import Flask
+from flask import Flask, redirect, url_for
 from dotenv import load_dotenv
 from models import db
 from config_loader import load_config, ConfigError
@@ -50,6 +50,10 @@ def create_app(testing=False):
 
     from routes.slideshow import slideshow_bp
     app.register_blueprint(slideshow_bp)
+
+    @app.route("/")
+    def root():
+        return redirect(url_for("survey.survey"))
 
     return app
 
