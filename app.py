@@ -31,7 +31,10 @@ def create_app(testing=False):
         if raw_url.startswith("postgres://"):
             raw_url = raw_url.replace("postgres://", "postgresql+psycopg2://", 1)
         app.config["SQLALCHEMY_DATABASE_URI"] = raw_url
-        app.config["SECRET_KEY"] = os.environ.get("SECRET_KEY", os.urandom(24))
+        secret = os.environ.get("SECRET_KEY")
+        if not secret:
+            raise RuntimeError("SECRET_KEY environment variable must be set")
+        app.config["SECRET_KEY"] = secret
         try:
             app.config["APP_CONFIG"] = load_config()
         except ConfigError as e:
@@ -42,10 +45,6 @@ def create_app(testing=False):
     return app
 
 
-# Only run at startup, not on test imports
-if os.environ.get("FLASK_TESTING") != "1":
-    app = create_app()
-    with app.app_context():
-        db.create_all()
-else:
-    app = None
+app = create_app(testing=os.environ.get("FLASK_TESTING") == "1")
+with app.app_context():
+    db.create_all()
