@@ -3,6 +3,7 @@ import io
 import base64
 import os
 from datetime import timezone
+from functools import wraps
 from flask import (Blueprint, render_template, request, redirect,
                    url_for, session, current_app, Response as FlaskResponse)
 import qrcode
@@ -12,7 +13,6 @@ dashboard_bp = Blueprint("dashboard", __name__)
 
 
 def login_required(f):
-    from functools import wraps
     @wraps(f)
     def decorated(*args, **kwargs):
         if not session.get("authenticated"):
@@ -48,24 +48,26 @@ def index():
     characters = config["characters"]
 
     all_responses = Response.query.all()
-    submitted_map = {}
-    duplicate_counts = {}
-    any_response_map = {}
-    for r in all_responses:
-        name = r.character_name
-        any_response_map[name] = True
-        if not r.is_duplicate:
-            submitted_map[name] = True
-        if r.is_duplicate:
-            duplicate_counts[name] = duplicate_counts.get(name, 0) + 1
 
-    # Include characters who have any response (even all-duplicate) in submitted list
-    submitted = [
-        (c, duplicate_counts.get(c, 0))
-        for c in characters
-        if c in submitted_map or c in any_response_map
-    ]
-    pending = [c for c in characters if c not in any_response_map]
+    # Group responses by character name
+    response_counts = {}   # character_name -> total count
+    duplicate_counts = {}  # character_name -> duplicate count
+    for r in all_responses:
+        response_counts[r.character_name] = response_counts.get(r.character_name, 0) + 1
+        if r.is_duplicate:
+            duplicate_counts[r.character_name] = duplicate_counts.get(r.character_name, 0) + 1
+
+    # dupe_count = extras beyond the first response; flag all-duplicate sets too
+    def _dupe_count(c):
+        total = response_counts[c]
+        dupes = duplicate_counts.get(c, 0)
+        # If every response is a duplicate (all-duplicate case), show 1 extra
+        if dupes == total:
+            return total
+        return total - 1
+
+    submitted = [(c, _dupe_count(c)) for c in characters if c in response_counts]
+    pending = [c for c in characters if c not in response_counts]
 
     public_url = os.environ.get("PUBLIC_URL", "http://localhost:5000")
     qr_data = generate_qr_base64(f"{public_url}/survey")

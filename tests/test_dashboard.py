@@ -66,7 +66,7 @@ def test_dashboard_flags_duplicate(auth_client, app):
         ))
         db.session.commit()
     resp = auth_client.get("/dashboard")
-    assert b"\u26a0" in resp.data or b"duplicate" in resp.data.lower()
+    assert b"duplicate" in resp.data.lower()
 
 
 def test_csv_export_headers(auth_client, app):
