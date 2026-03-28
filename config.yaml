@@ -1,0 +1,44 @@
+characters:
+  - Lord Blackwood
+  - Lady Crimson
+  - Col. Mustard
+  - Miss Scarlet
+  - Dr. Venom
+  - Prof. Plum
+  - Mrs. White
+  - Rev. Green
+  - Sgt. Grey
+  - Baroness Blue
+  - Countess Coral
+  - Duke Diamond
+  - Earl Emerald
+  - Fiona Flame
+  - Gus Gold
+  - Harriet Haze
+  - Ivan Ivory
+  - Jade Jester
+  - Kit Krimson
+  - Luna Lace
+
+questions:
+  - id: name
+    text: "What's your name?"
+    type: dropdown
+  - id: accuse
+    text: "Who do you accuse of murder?"
+    type: dropdown
+  - id: why
+    text: "Why do you accuse them?"
+    type: text
+  - id: best_dressed
+    text: "Who was best dressed?"
+    type: dropdown
+  - id: best_actor
+    text: "Who was the best actor/actress?"
+    type: dropdown
+  - id: money
+    text: "How much money did you end with?"
+    type: text
+  - id: how_money
+    text: "How did you get/lose your money?"
+    type: text
