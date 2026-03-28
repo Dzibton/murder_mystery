@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block title %}Dashboard Login{% endblock %}
+{% block content %}
+<h1>&#128299; Host Dashboard</h1>
+<div class="card" style="margin-top: 32px;">
+  <form method="post">
+    <label for="pin">Enter PIN</label>
+    <input type="password" name="pin" id="pin" autocomplete="off" autofocus
+           style="font-size: 1.5rem; letter-spacing: 0.3em; text-align: center;">
+    {% if error %}<p class="error" style="margin-top: 10px;">{{ error }}</p>{% endif %}
+    <button type="submit" class="btn btn-full" style="margin-top: 16px;">Unlock</button>
+  </form>
+</div>
+{% endblock %}

@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+{% block title %}Dashboard &mdash; Murder Mystery{% endblock %}
+{% block content %}
+<h1>&#128299; Murder Mystery</h1>
+
+<div class="qr-center">
+  <img src="data:image/png;base64,{{ qr_data }}" alt="QR code for survey">
+  <p>Scan to fill out the survey</p>
+</div>
+
+<div class="two-col">
+  <div>
+    <p class="col-heading">Submitted ({{ submitted|length }})</p>
+    <ul class="character-list">
+      {% for name, dupe_count in submitted %}
+      <li>
+        {% if dupe_count > 0 %}
+        <span class="warn">&#9888; {{ name }} ({{ dupe_count + 1 }} submissions) duplicate</span>
+        {% else %}
+        <span class="dot-green">{{ name }}</span>
+        {% endif %}
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  <div>
+    <p class="col-heading">Pending ({{ pending|length }})</p>
+    <ul class="character-list">
+      {% for name in pending %}
+      <li><span class="dot-grey">{{ name }}</span></li>
+      {% endfor %}
+    </ul>
+  </div>
+</div>
+
+<div class="button-row">
+  <a href="/dashboard/export" class="btn btn-secondary">&#11015; Export CSV</a>
+  <a href="/slideshow" class="btn">&#9654; View Slideshow</a>
+</div>
+{% endblock %}
