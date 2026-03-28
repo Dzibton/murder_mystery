@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block title %}Results &mdash; Murder Mystery{% endblock %}
+{% block content %}
+<h1>&#128299; Vote Tallies</h1>
+<p style="color: var(--muted); margin-bottom: 24px;">{{ total_votes }} response{{ 's' if total_votes != 1 else '' }} counted</p>
+
+{% for qid, label in tally_questions %}
+<div class="card" style="margin-bottom: 16px;">
+  <p class="col-heading" style="margin-bottom: 12px;">{{ label }}</p>
+  {% if tallies[qid] %}
+  <table class="tally-table">
+    {% for name, count in tallies[qid] %}
+    <tr>
+      <td>{{ name }}</td>
+      <td class="tally-count">{{ count }}</td>
+    </tr>
+    {% endfor %}
+  </table>
+  {% else %}
+  <p style="color: var(--muted); font-size: 0.9rem;">No votes yet.</p>
+  {% endif %}
+</div>
+{% endfor %}
+
+<div class="card reset-card">
+  <p class="col-heading" style="margin-bottom: 12px;">Reset All Responses</p>
+  {% if reset_error %}
+  <p class="error">Incorrect PIN. Database not cleared.</p>
+  {% endif %}
+  {% if reset_success %}
+  <p class="success-msg">Database cleared successfully.</p>
+  {% endif %}
+  <form method="POST" action="{{ url_for('dashboard.reset') }}" onsubmit="return confirm('This will permanently delete ALL survey responses. Are you sure?')">
+    <label for="pin">Enter PIN to confirm reset</label>
+    <input type="password" id="pin" name="pin" placeholder="PIN" autocomplete="off" style="margin-bottom: 12px;">
+    <button type="submit" class="btn btn-danger btn-full">&#128465; Delete All Responses</button>
+  </form>
+</div>
+
+<div class="button-row">
+  <a href="{{ url_for('dashboard.index') }}" class="btn btn-secondary">&#8592; Back to Dashboard</a>
+</div>
+{% endblock %}

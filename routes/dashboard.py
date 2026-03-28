@@ -80,6 +80,53 @@ def index():
     )
 
 
+@dashboard_bp.route("/dashboard/results")
+@login_required
+def results():
+    all_responses = Response.query.order_by(Response.submitted_at).all()
+
+    # Use most recent response per character (same logic as slideshow)
+    latest = {}
+    for r in all_responses:
+        latest[r.character_name] = r
+
+    tally_questions = [
+        ("accuse", "Who do you accuse of murder?"),
+        ("best_dressed", "Who was best dressed?"),
+        ("best_actor", "Who was the best actor/actress?"),
+    ]
+
+    tallies = {}
+    for qid, _ in tally_questions:
+        counts = {}
+        for r in latest.values():
+            vote = r.answers.get(qid, "").strip()
+            if vote:
+                counts[vote] = counts.get(vote, 0) + 1
+        tallies[qid] = sorted(counts.items(), key=lambda x: x[1], reverse=True)
+
+    return render_template(
+        "dashboard/results.html",
+        tally_questions=tally_questions,
+        tallies=tallies,
+        total_votes=len(latest),
+        reset_error=request.args.get("reset_error"),
+        reset_success=request.args.get("reset_success"),
+    )
+
+
+@dashboard_bp.route("/dashboard/reset", methods=["POST"])
+@login_required
+def reset():
+    pin = request.form.get("pin", "").strip()
+    correct = current_app.config.get("DASHBOARD_PIN") or os.environ.get("DASHBOARD_PIN", "1234")
+    if pin != correct:
+        return redirect(url_for("dashboard.results", reset_error="1"))
+    db.session.query(Response).delete()
+    db.session.commit()
+    return redirect(url_for("dashboard.results", reset_success="1"))
+
+
 @dashboard_bp.route("/dashboard/export")
 @login_required
 def export():

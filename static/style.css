@@ -138,3 +138,12 @@ textarea { min-height: 80px; resize: vertical; }
 }
 
 .character-list { list-style: none; line-height: 2; }
+
+.tally-table { width: 100%; border-collapse: collapse; }
+.tally-table td { padding: 8px 4px; border-bottom: 1px solid #333; }
+.tally-table tr:last-child td { border-bottom: none; }
+.tally-count { text-align: right; font-weight: bold; color: var(--accent); min-width: 40px; }
+
+.btn-danger { background: #8b0000; }
+.reset-card { border: 1px solid #8b0000; margin-top: 32px; }
+.success-msg { color: var(--green); font-size: 0.9rem; margin-bottom: 12px; }
